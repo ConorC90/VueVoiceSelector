@@ -1,18 +1,21 @@
 <template>
   <v-app>
     <div class="background grey-text">
-      <v-container class="mx-10" fluid>
-        <NavBar
-          :filterOptions="this.filterOptions"
-          :voiceNames="voiceNames"
-          @searchInput="filter"
+      <NavBar
+        :filterOptions="this.filterOptions"
+        :voiceNames="voiceNames"
+        :sortOptions="sortOptions"
+        @filterInput="search"
+        @orderItems="orderItems"
+        @selectRandom="selectRandom"
+      />
+
+      <v-main>
+        <HelloWorld
+          :randomVoice="this.randomVoice"
+          :voices="this.filteredVoices"
         />
-      </v-container>
-      <v-container>
-        <v-main>
-          <HelloWorld :voices="this.filteredVoices" />
-        </v-main>
-      </v-container>
+      </v-main>
     </div>
   </v-app>
 </template>
@@ -29,6 +32,7 @@ export default {
   },
 
   data: () => ({
+    randomVoice: {},
     filteredVoices: [],
     voices: [
       {
@@ -570,20 +574,52 @@ export default {
   computed: {
     filterOptions() {
       const tags = this.voices.flatMap((item) => item.tags);
-      return [...new Set(tags)];
+      [...new Set(tags)];
+      tags.unshift("View All");
+      return tags;
     },
     voiceNames() {
-      return this.voices.map((voice) => voice.name);
+      const voices = this.voices.map((voice) => voice.name);
+      voices.unshift("View All");
+      return voices;
+    },
+    sortOptions() {
+      return ["A-Z", "Z-A"];
     },
   },
   methods: {
-    filter(e) {
-      console.log(e);
+    search(e, item = "name") {
+      console.log(e, item);
+      if (e === "View All") {
+        return (this.filteredVoices = this.voices);
+      }
       const filteredVoices = this.voices.filter((voice) => {
-        return voice.name.toLowerCase().includes(e.toLowerCase());
+        return item == "name"
+          ? voice[item].toLowerCase().includes(e.toLowerCase())
+          : voice[item].includes(e);
       });
-      console.log(filteredVoices);
       this.filteredVoices = filteredVoices;
+    },
+    orderItems(e) {
+      const sortedArray = this.filteredVoices.sort(function(a, b) {
+        var nameA = a.name.toUpperCase();
+        var nameB = b.name.toUpperCase();
+        if (nameA < nameB) {
+          return -1;
+        }
+        if (nameA > nameB) {
+          return 1;
+        }
+        return 0;
+      });
+      return e === "A-Z" ? sortedArray : sortedArray.reverse();
+    },
+    selectRandom() {
+      const random = this.voices[
+        Math.floor(Math.random() * this.voices.length)
+      ];
+      this.filteredVoices = this.voices;
+      return (this.randomVoice = random);
     },
   },
   mounted() {
@@ -593,9 +629,13 @@ export default {
 </script>
 <style>
 .background {
-  background-color: pink;
+  background-color: #1b1b1b;
+  height: 100%;
 }
 .grey-text {
   color: #d2d2d2;
+}
+.greyBackground {
+  background-color: #d2d2d2;
 }
 </style>

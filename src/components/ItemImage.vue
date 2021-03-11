@@ -1,6 +1,10 @@
 <template>
-  <v-col @mouseover="isHovering = true" @mouseleave="isHovering = false">
-    <div v-if="isHovering" @click="clickedFavourite">
+  <v-col
+    @mouseover="isHovering = true"
+    @mouseleave="isHovering = false"
+    class="container"
+  >
+    <div v-if="isHovering" @click="clickedFavourite" class="overlay">
       <img
         v-if="isFavourite"
         src="../assets/voice-favourite.svg"
@@ -17,6 +21,7 @@
         size="120"
         class="grey-background"
         :class="{ 'active-background': isActive }"
+        @click="clickedVoice"
       >
         <div>
           <img
@@ -57,6 +62,9 @@ export default {
     clickedFavourite() {
       this.$emit("clickedFavourite");
     },
+    clickedVoice() {
+      this.$emit("selectVoice");
+    },
   },
 };
 </script>
@@ -69,5 +77,20 @@ export default {
 }
 .active-text {
   color: #00d9ff;
+}
+
+.container {
+  position: relative;
+  width: 150px;
+}
+.overlay {
+  width: 23px;
+  height: 23px;
+  background-color: #d2d2d2;
+  border-radius: 50%;
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  z-index: 2;
 }
 </style>

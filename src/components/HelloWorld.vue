@@ -1,16 +1,24 @@
 <template>
-  <div class="mt-6">
+  <v-container>
     <v-row class="align-center">
       <h2 class="mr-2">Favourite Voices</h2>
-      <v-divider class="greyCustom"></v-divider>
+      <v-divider class="greyBackground"></v-divider>
     </v-row>
     <v-row class="text-center">
+      <p v-if="this.favourites.length == 0">
+        To add favourites you can hover over a voice icon and click on the
+        heart.
+      </p>
       <v-col
         v-for="voice in favourites"
         :key="voice.id"
-        @click="selectVoice(voice)"
+        lg="2"
+        md="3"
+        sm="4"
+        xs="6"
       >
         <ItemImage
+          @selectVoice="selectVoice(voice)"
           @clickedFavourite="favouriteClick(voice)"
           :item="voice"
           :isFavourite="isFavourite(voice)"
@@ -20,15 +28,19 @@
     </v-row>
     <v-row class="align-center">
       <h2 class="mr-2">Pro Voices</h2>
-      <v-divider class="active"></v-divider>
+      <v-divider class="greyBackground"></v-divider>
     </v-row>
     <v-row class="text-center">
       <v-col
         v-for="voice in voices"
         :key="voice.id"
-        @click="selectVoice(voice)"
+        lg="2"
+        md="3"
+        sm="4"
+        xs="6"
       >
         <ItemImage
+          @selectVoice="selectVoice(voice)"
           @clickedFavourite="favouriteClick(voice)"
           :item="voice"
           :isFavourite="isFavourite(voice)"
@@ -36,7 +48,7 @@
         />
       </v-col>
     </v-row>
-  </div>
+  </v-container>
 </template>
 
 <script>
@@ -49,6 +61,10 @@ export default {
     voices: {
       type: Array,
       required: true,
+    },
+    randomVoice: {
+      type: Object,
+      required: false,
     },
   },
   name: "HelloWorld",
@@ -68,10 +84,12 @@ export default {
   },
   methods: {
     favouriteClick(item) {
-      const itemIndex = this.favourites.indexOf(item);
-      itemIndex === -1
+      const isAFavourite = this.favourites
+        .map((item) => item.id)
+        .indexOf(item.id);
+      isAFavourite === -1
         ? this.favourites.push(item)
-        : this.favourites.splice(itemIndex, 1);
+        : this.favourites.splice(isAFavourite, 1);
     },
     selectVoice(voice) {
       this.selectedVoice = voice;
@@ -90,6 +108,9 @@ export default {
     selectedVoice(newSelectedVoice) {
       localStorage.selectedVoice = JSON.stringify(newSelectedVoice);
     },
+    randomVoice(newRandomVoice) {
+      this.selectedVoice = newRandomVoice;
+    },
   },
   mounted() {
     if (localStorage.favourites) {
@@ -102,4 +123,3 @@ export default {
   },
 };
 </script>
-<style scoped></style>
