@@ -1,8 +1,9 @@
 <template>
-  <v-container class="mx-10" fluid>
+  <v-container fluid>
     <v-row class="mb-14" absolute dark>
-      <v-col cols="4" lg="2" md="3" sm="12" xs="12">
+      <v-col cols="12" lg="4" md="4" sm="6">
         <v-autocomplete
+          @change="$emit('filterInput', $event, 'name')"
           :items="voiceNames"
           v-model="searchTerm"
           label="Search"
@@ -13,7 +14,6 @@
           any
           rounded
           dense
-          @change="$emit('filterInput', $event, 'name')"
         >
           <template v-slot:prepend-inner>
             <img src="../assets/search.png" />
@@ -21,7 +21,7 @@
         </v-autocomplete>
       </v-col>
       <v-spacer></v-spacer>
-      <v-col cols="2">
+      <v-col cols="12" lg="2" md="3" sm="6">
         <v-select
           @change="$emit('filterInput', $event, 'tags')"
           :items="filterOptions"
@@ -34,28 +34,32 @@
           </template>
         </v-select>
       </v-col>
-      <v-col cols="2">
+      <v-col cols="10" lg="2" md="3" sm="6">
         <v-select
+          @change="$emit('orderItems', $event)"
           :items="sortOptions"
           filled
           dark
           label="Order Voices"
-          @change="$emit('orderItems', $event)"
         >
           <template v-slot:prepend>
             <img src="../assets/order.png" />
           </template>
         </v-select>
       </v-col>
-      <v-col cols="1">
-        <img
-          @click="$emit('selectRandom')"
-          src="../assets/button-random.svg"
-          alt="You fucked up boo"
-      /></v-col>
-    </v-row>
-    <v-row v-if="$vuetify.breakpoint.xsOnly">
-      <h2>Helllooooooooooooooo</h2>
+      <v-col cols="2" lg="1" md="1" sm="2" xs="12">
+        <v-tooltip bottom>
+          <template v-slot:activator="{ on, attrs }">
+            <span v-bind="attrs" v-on="on"
+              ><img
+                @click="$emit('selectRandom')"
+                src="../assets/button-random.svg"
+                alt="You fucked up boo"
+            /></span>
+          </template>
+          <span>Select a random voice</span>
+        </v-tooltip>
+      </v-col>
     </v-row>
   </v-container>
 </template>
