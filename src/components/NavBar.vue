@@ -1,33 +1,59 @@
 <template>
-  <div class="mb-10">
-    <v-app-bar absolute color="deep-purple accent-4" dark>
-      <v-text-field label="Search" placeholder="Voices" filled rounded dense>
+  <v-row class="mb-14" absolute dark>
+    <v-col cols="4">
+      <v-autocomplete
+        :items="voiceNames"
+        v-model="searchTerm"
+        label="Search"
+        placeholder="Voices"
+        filled
+        autofocus
+        any
+        rounded
+        dense
+        @change="$emit('searchInput', $event)"
+      >
         <template v-slot:prepend-inner>
           <img src="../assets/search.png" />
         </template>
-      </v-text-field>
-      <v-toolbar-title>Voice Mod</v-toolbar-title>
-      <v-spacer></v-spacer>
-
-      <img src="../assets/order.png" alt="You fucked up boo" />
-
-      <img src="../assets/button-random.svg" alt="You fucked up boo" />
-
-      <img src="../assets/filter.png" alt="You fucked up boo" />
-    </v-app-bar>
-  </div>
+      </v-autocomplete>
+    </v-col>
+    <v-spacer></v-spacer>
+    <v-col cols="2">
+      <v-select :items="filterOptions" filled label="Filled style">
+        <template v-slot:prepend>
+          <img src="../assets/filter.png" />
+        </template>
+      </v-select>
+    </v-col>
+    <v-col cols="2">
+      <v-select :items="[]" filled label="Filled style">
+        <template v-slot:prepend>
+          <img src="../assets/order.png" />
+        </template>
+      </v-select>
+    </v-col>
+    <v-col cols="1">
+      <img src="../assets/button-random.svg" alt="You fucked up boo"
+    /></v-col>
+  </v-row>
 </template>
 <script>
 export default {
+  props: {
+    filterOptions: {
+      type: Array,
+      required: false,
+    },
+    voiceNames: {
+      type: Array,
+      required: false,
+    },
+  },
   components: {},
 
   data: () => ({
-    icons: {
-      serachIcon: "",
-      randomIcon: "",
-      orderIcon: "",
-      filterIcon: "",
-    },
+    searchTerm: "",
   }),
 };
 </script>

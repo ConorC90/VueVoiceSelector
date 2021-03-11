@@ -1,40 +1,42 @@
 <template>
-  <v-container>
+  <div class="mt-6">
+    <v-row class="align-center">
+      <h2 class="mr-2">Favourite Voices</h2>
+      <v-divider class="greyCustom"></v-divider>
+    </v-row>
     <v-row class="text-center">
-      <v-col cols="12">
-        <h1>Main Container</h1>
-        <h2>Selected= {{ selectedVoice }}</h2>
-        <h2>Besties</h2>
-        <ul>
-          <li v-for="(voice, index) in favourites" :key="index">
-            <ItemImage
-              @clickedFavourite="favouriteClick(voice)"
-              :item="voice"
-              :isFavourite="isFavourite(voice)"
-              :isActive="selectedVoice === voice"
-            />
-          </li>
-        </ul>
-        <h2>All</h2>
-        <ul>
-          <li
-            v-for="voice in voices"
-            :key="voice.id"
-            @click="selectVoice(voice)"
-          >
-            <ItemImage
-              @mouseover="isHovering = true"
-              @mouseleave="isHovering = false"
-              @clickedFavourite="favouriteClick(voice)"
-              :item="voice"
-              :isFavourite="isFavourite(voice)"
-              :isActive="selectedVoice === voice"
-            />
-          </li>
-        </ul>
+      <v-col
+        v-for="voice in favourites"
+        :key="voice.id"
+        @click="selectVoice(voice)"
+      >
+        <ItemImage
+          @clickedFavourite="favouriteClick(voice)"
+          :item="voice"
+          :isFavourite="isFavourite(voice)"
+          :isActive="isActive(voice)"
+        />
       </v-col>
     </v-row>
-  </v-container>
+    <v-row class="align-center">
+      <h2 class="mr-2">Pro Voices</h2>
+      <v-divider class="active"></v-divider>
+    </v-row>
+    <v-row class="text-center">
+      <v-col
+        v-for="voice in voices"
+        :key="voice.id"
+        @click="selectVoice(voice)"
+      >
+        <ItemImage
+          @clickedFavourite="favouriteClick(voice)"
+          :item="voice"
+          :isFavourite="isFavourite(voice)"
+          :isActive="isActive(voice)"
+        />
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
@@ -52,15 +54,20 @@ export default {
   name: "HelloWorld",
   data() {
     return {
-      isHovering: "",
       favourites: [],
       selectedVoice: "",
     };
   },
-  computed: {},
+  computed: {
+    favouritesItems() {
+      const array = this.favourites.filter((item) =>
+        this.voicescd.includes(item)
+      );
+      return array;
+    },
+  },
   methods: {
     favouriteClick(item) {
-      console.log(item);
       const itemIndex = this.favourites.indexOf(item);
       itemIndex === -1
         ? this.favourites.push(item)
@@ -70,14 +77,29 @@ export default {
       this.selectedVoice = voice;
     },
     isFavourite(item) {
-      console.log(this.favourites.includes(item));
-      return this.favourites.includes(item);
+      return this.favourites.map((item) => item.id).includes(item.id);
     },
+    isActive(item) {
+      return this.selectedVoice.id === item.id;
+    },
+  },
+  watch: {
+    favourites(newFavourites) {
+      localStorage.favourites = JSON.stringify(newFavourites);
+    },
+    selectedVoice(newSelectedVoice) {
+      localStorage.selectedVoice = JSON.stringify(newSelectedVoice);
+    },
+  },
+  mounted() {
+    if (localStorage.favourites) {
+      this.favourites = JSON.parse(localStorage.favourites);
+    }
+    if (localStorage.selectedVoice) {
+      this.selectedVoice = JSON.parse(localStorage.selectedVoice);
+      this.selectedVoice.id === JSON.parse(localStorage.selectedVoice).id;
+    }
   },
 };
 </script>
-<style scoped>
-.active {
-  background-color: pink;
-}
-</style>
+<style scoped></style>

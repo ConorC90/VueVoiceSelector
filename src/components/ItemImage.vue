@@ -1,5 +1,5 @@
 <template>
-  <div @mouseover="isHovering = true" @mouseleave="isHovering = false">
+  <v-col @mouseover="isHovering = true" @mouseleave="isHovering = false">
     <div v-if="isHovering" @click="clickedFavourite">
       <img
         v-if="isFavourite"
@@ -12,9 +12,24 @@
         alt="unfavorited item"
       />
     </div>
-    {{ item.name }}
-    <img :src="require(`../assets/${item.icon}`)" alt="You fucked up boo" />
-  </div>
+    <div>
+      <v-avatar
+        size="120"
+        class="grey-background"
+        :class="{ 'active-background': isActive }"
+      >
+        <div>
+          <img
+            :src="require(`../assets/${item.icon}`)"
+            alt="You fucked up boo"
+          />
+        </div>
+      </v-avatar>
+      <div :class="{ 'active-text': isActive }">
+        {{ item.name }}
+      </div>
+    </div>
+  </v-col>
 </template>
 
 <script>
@@ -45,3 +60,14 @@ export default {
   },
 };
 </script>
+<style scoped>
+.grey-background {
+  background-color: #d2d2d2;
+}
+.active-background {
+  background: linear-gradient(#00c9ff, #00e5ff);
+}
+.active-text {
+  color: #00d9ff;
+}
+</style>
