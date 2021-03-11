@@ -4,7 +4,11 @@
     @mouseleave="isHovering = false"
     class="container"
   >
-    <div v-if="isHovering" @click="clickedFavourite" class="overlay">
+    <div
+      v-if="isHovering || isMobile"
+      @click="clickedFavourite"
+      class="overlay"
+    >
       <img
         v-if="isFavourite"
         src="../assets/voice-favourite.svg"

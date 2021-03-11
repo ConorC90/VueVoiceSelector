@@ -3,7 +3,7 @@
     <v-row class="mb-14" absolute dark>
       <v-col cols="12" lg="4" md="4" sm="6">
         <v-autocomplete
-          @change="$emit('filterInput', $event, 'name')"
+          @change="$emit('filterInput', $event, 'name'), this."
           :items="voiceNames"
           v-model="searchTerm"
           label="Search"
