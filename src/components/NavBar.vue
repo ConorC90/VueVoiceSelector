@@ -1,9 +1,9 @@
 <template>
-  <v-container fluid>
+  <v-container>
     <v-row class="mb-14" absolute dark>
       <v-col cols="12" lg="4" md="4" sm="6">
         <v-autocomplete
-          @change="$emit('filterInput', $event, 'name'), this."
+          @change="$emit('filterInput', $event, 'name')"
           :items="voiceNames"
           v-model="searchTerm"
           label="Search"

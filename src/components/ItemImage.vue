@@ -5,7 +5,7 @@
     class="container"
   >
     <div
-      v-if="isHovering || isMobile"
+      v-if="isHovering || this.isMobile"
       @click="clickedFavourite"
       class="overlay"
     >
@@ -60,6 +60,11 @@ export default {
     isActive: {
       type: Boolean,
       required: true,
+    },
+  },
+  computed: {
+    isMobile() {
+      return window.innerWidth < 600;
     },
   },
   methods: {

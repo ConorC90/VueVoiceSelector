@@ -81,9 +81,6 @@ export default {
       );
       return array;
     },
-    isMobile() {
-      return window.innerWidth < 600;
-    },
   },
   methods: {
     favouriteClick(item) {

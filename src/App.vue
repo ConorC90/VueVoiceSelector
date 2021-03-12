@@ -8,27 +8,32 @@
         @filterInput="search"
         @orderItems="orderItems"
         @selectRandom="selectRandom"
+        class="marginWidth"
       />
-
-      <v-main>
-        <HelloWorld
+      <v-main class="pb-12">
+        <VoiceContainer
           :randomVoice="this.randomVoice"
           :voices="this.filteredVoices"
+          class="marginWidth"
         />
       </v-main>
+      <Footer />
     </div>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld";
+import VoiceContainer from "./components/VoiceContainer";
 import NavBar from "./components/NavBar";
+import Footer from "./components/Footer";
+
 export default {
   name: "App",
 
   components: {
-    HelloWorld,
+    VoiceContainer,
     NavBar,
+    Footer,
   },
 
   data: () => ({
@@ -637,5 +642,9 @@ export default {
 }
 .greyBackground {
   background-color: #d2d2d2;
+}
+.marginWidth {
+  max-width: 1246px;
+  margin: auto;
 }
 </style>
