@@ -28,10 +28,7 @@
         @click="clickedVoice"
       >
         <div>
-          <img
-            :src="require(`../assets/${item.icon}`)"
-            alt="You fucked up boo"
-          />
+          <img :src="require(`../assets/${item.icon}`)" alt="Voice Icon" />
         </div>
       </v-avatar>
       <div :class="{ 'active-text': isActive }">
@@ -87,7 +84,6 @@ export default {
 .active-text {
   color: #00d9ff;
 }
-
 .container {
   position: relative;
   width: 150px;

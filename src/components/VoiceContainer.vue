@@ -18,7 +18,7 @@
         xs="6"
       >
         <ItemImage
-          @selectVoice="selectVoice(voice)"
+          @selectVoice="setSelectVoice(voice)"
           @clickedFavourite="favouriteClick(voice)"
           :item="voice"
           :isFavourite="isFavourite(voice)"
@@ -31,6 +31,9 @@
       <v-divider class="greyBackground"></v-divider>
     </v-row>
     <v-row class="text-center">
+      <p v-if="this.voices.length === 0">
+        No voices to display
+      </p>
       <v-col
         v-for="voice in voices"
         :key="voice.id"
@@ -40,7 +43,7 @@
         xs="6"
       >
         <ItemImage
-          @selectVoice="selectVoice(voice)"
+          @selectVoice="setSelectVoice(voice)"
           @clickedFavourite="favouriteClick(voice)"
           :item="voice"
           :isFavourite="isFavourite(voice)"
@@ -67,7 +70,6 @@ export default {
       required: false,
     },
   },
-  name: "HelloWorld",
   data() {
     return {
       favourites: [],
@@ -91,8 +93,10 @@ export default {
         ? this.favourites.push(item)
         : this.favourites.splice(isAFavourite, 1);
     },
-    selectVoice(voice) {
-      this.selectedVoice = voice;
+    setSelectVoice(voice) {
+      this.selectedVoice !== voice
+        ? (this.selectedVoice = voice)
+        : (this.selectedVoice = {});
     },
     isFavourite(item) {
       return this.favourites.map((item) => item.id).includes(item.id);

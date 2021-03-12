@@ -1,9 +1,9 @@
 <template>
   <v-container>
-    <v-row class="mb-14" absolute dark>
+    <v-row class="mb-14 align-center" absolute dark>
       <v-col cols="12" lg="4" md="4" sm="6">
         <v-autocomplete
-          @change="$emit('filterInput', $event, 'name')"
+          @change="input('filterInput', $event, 'name')"
           :items="voiceNames"
           v-model="searchTerm"
           label="Search"
@@ -16,21 +16,22 @@
           dense
         >
           <template v-slot:prepend-inner>
-            <img src="../assets/search.png" />
+            <img src="../assets/search.png" alt="Search Voices" />
           </template>
         </v-autocomplete>
       </v-col>
       <v-spacer></v-spacer>
       <v-col cols="12" lg="2" md="3" sm="6">
         <v-select
-          @change="$emit('filterInput', $event, 'tags')"
+          @change="input('filterInput', $event, 'tags')"
           :items="filterOptions"
+          v-model="filterTerm"
           filled
           dark
           label="Filled style"
         >
           <template v-slot:prepend>
-            <img src="../assets/filter.png" />
+            <img src="../assets/filter.png" alt="Filter Voices" />
           </template>
         </v-select>
       </v-col>
@@ -43,7 +44,7 @@
           label="Order Voices"
         >
           <template v-slot:prepend>
-            <img src="../assets/order.png" />
+            <img src="../assets/order.png" alt="Order Voices" />
           </template>
         </v-select>
       </v-col>
@@ -52,9 +53,9 @@
           <template v-slot:activator="{ on, attrs }">
             <span v-bind="attrs" v-on="on"
               ><img
-                @click="$emit('selectRandom')"
+                @click="selectedRandom()"
                 src="../assets/button-random.svg"
-                alt="You fucked up boo"
+                alt="Select Random Voice"
             /></span>
           </template>
           <span>Select a random voice</span>
@@ -82,6 +83,18 @@ export default {
 
   data: () => ({
     searchTerm: "",
+    filterTerm: "",
   }),
+  methods: {
+    input(filterInput, e, type) {
+      this.$emit(filterInput, e, type);
+      type === "name" ? (this.filterTerm = "") : (this.searchTerm = "");
+    },
+    selectedRandom() {
+      this.filterTerm = "";
+      this.searchTerm = "";
+      this.$emit("selectRandom");
+    },
+  },
 };
 </script>
