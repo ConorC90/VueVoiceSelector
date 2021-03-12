@@ -76,7 +76,6 @@ export default {
       selectedVoice: "",
     };
   },
-
   methods: {
     favouriteClick(item) {
       const isAFavourite = this.favourites
