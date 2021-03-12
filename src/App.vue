@@ -10,7 +10,7 @@
         @selectRandom="selectRandom"
         class="marginWidth"
       />
-      <v-main class="pb-12">
+      <v-main class="pb-12 mx-4">
         <VoiceContainer
           :randomVoice="this.randomVoice"
           :voices="this.filteredVoices"

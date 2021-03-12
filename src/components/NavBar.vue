@@ -7,7 +7,7 @@
           :items="voiceNames"
           v-model="searchTerm"
           label="Search"
-          placeholder="Voices"
+          placeholder="Type something"
           dark
           filled
           autofocus
@@ -21,14 +21,14 @@
         </v-autocomplete>
       </v-col>
       <v-spacer></v-spacer>
-      <v-col cols="12" lg="2" md="3" sm="6">
+      <v-col cols="12" lg="3" md="3" sm="6">
         <v-select
           @change="input('filterInput', $event, 'tags')"
           :items="filterOptions"
           v-model="filterTerm"
           filled
           dark
-          label="Filled style"
+          label="Filter Catogary"
         >
           <template v-slot:prepend>
             <img src="../assets/filter.png" alt="Filter Voices" />

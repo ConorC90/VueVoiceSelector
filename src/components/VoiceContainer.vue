@@ -76,14 +76,7 @@ export default {
       selectedVoice: "",
     };
   },
-  computed: {
-    favouritesItems() {
-      const array = this.favourites.filter((item) =>
-        this.voicescd.includes(item)
-      );
-      return array;
-    },
-  },
+
   methods: {
     favouriteClick(item) {
       const isAFavourite = this.favourites

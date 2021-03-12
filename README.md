@@ -1,6 +1,10 @@
 # Voice-Mod
 
-This project contains
+Autor: Conor Carey
+
+This is a project that allows a user to select voices, favourite voices, and filter them by name/tags
+
+This project was built useing vue.js as a framework and vuetify as a css library
 
 ## Project setup
 
