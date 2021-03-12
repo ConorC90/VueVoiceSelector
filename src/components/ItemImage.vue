@@ -1,5 +1,9 @@
 <template>
-  <v-col @mouseover="isHovering = true" @mouseleave="isHovering = false">
+  <v-col
+    @mouseover="isHovering = true"
+    @mouseleave="isHovering = false"
+    class="container"
+  >
     <div
       v-if="isHovering || this.isMobile"
       @click="clickedFavourite"
@@ -27,7 +31,7 @@
           <img :src="require(`../assets/${item.icon}`)" alt="Voice Icon" />
         </div>
       </v-avatar>
-      <div class="mt-2" :class="{ 'active-text': isActive }">
+      <div :class="{ 'active-text': isActive }">
         {{ item.name }}
       </div>
     </div>
